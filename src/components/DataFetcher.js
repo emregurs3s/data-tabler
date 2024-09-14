@@ -4,39 +4,36 @@ import axios from 'axios';
 
 const DataFetcher=({data})=>{
     const keys= Object.keys(data);
-    const values= Object.values(data);
-   
+    const exampleValue = data[keys[1]] ; 
+  const valueHeaders = Object.keys(exampleValue); 
 
-
-return(
+  return (
     <div>
       <table border="1" cellPadding="5" cellSpacing="0">
         <thead>
-        <tr>
-        {
-            keys.map((key,index)=>(
-            <th key={index}>
-                {key}
-            </th>))
-        }
-        </tr>
+          <tr>
+        <th> </th>
+            {valueHeaders.map((header, index) => (
+              <th key={index}>{header}</th>
+            ))}
+            
+          </tr>
         </thead>
         <tbody>
-            <tr>
-        {
-            values.map((value,colIndex)=>(
-                <td key={colIndex}>
-                
-                    {typeof value === 'object' ? JSON.stringify(value) : value}
-               </td>))
-        }                
+          {keys.map((key, colIndex) => (
+            <tr key={colIndex}>
+              <td>{key}</td>
+              {valueHeaders.map((header, rowIndex) => (
+                <td key={rowIndex}>
+                  {data[key][header]} 
+                </td>
+              ))}
             </tr>
+          ))}
         </tbody>
       </table>
-
     </div>
-)
-}
+  );
+};
 
 export default DataFetcher;
-
