@@ -12,7 +12,7 @@ const DataFetcher = ({ data }) => {
   const allKeys = Object.keys(data);
   const exampleValue = data[allKeys[0]] || {}; 
   const valueHeaders = Object.keys(exampleValue);
-  if (allKeys.some(key => data[key].hasOwnProperty("name"))) {
+  if (allKeys.some(key => data[key].hasOwnProperty("name")) && !valueHeaders.includes("name")) {
     valueHeaders.unshift("name");
   }
 
