@@ -7,7 +7,7 @@ const App =() => {
   
 const [data,setData] = useState({});
 useEffect(()=> {
-axios("https://finans.truncgil.com/v4/today.json")
+axios("https://jsonplaceholder.typicode.com/posts")
 .then(res=>{
 setData(res.data);
 })

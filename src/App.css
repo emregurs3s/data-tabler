@@ -1,6 +1,29 @@
 .App {
 }
+.container {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  margin: 0;
+}
 ul,
 li {
   list-style-type: none;
+}
+.table {
+  width: 50%;
+  border: 2px solid black;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+td,
+th {
+  border: 2px solid black;
+  padding: 5px;
+  text-align: left;
+}
+table th {
+  background-color: #d1084b;
+  color: white;
+  font-weight: 600;
 }

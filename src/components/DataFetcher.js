@@ -1,5 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+/* function FilterTable({products}){
+  const [filterText , setFilterText] = useState ('');
+  return(
+<div>
+  <SearchBar
+  filterText={filterText}
+  />
+  <DataFetcher data={products} filterText={filterText}/>
+</div>
+
+  )
+}
+function SearchBar(filterText,setFilterText)
+{
+  return(
+<form>
+  <input
+  type='text'
+  value={filterText}
+  placeholder='Ara...'
+  onChange={(e)=>setFilterText(e.target.value)}
+  />
+</form>
+
+  )
+
+} */
 const DataFetcher = ({ data }) => {
   if (!data || Object.keys(data).length === 0) {
     return <div>Veri mevcut değil</div>;
@@ -32,9 +59,11 @@ const DataFetcher = ({ data }) => {
   });
 
   return (
-    <div>
+    <div className='container'>
+     
+      <span className='search-bar-text'>SEARCH SearchBar</span>
       {updateDate && <h2>Güncelleme Tarihi: {updateDate}</h2>}
-      <table border="1" cellPadding="5" cellSpacing="0">
+      <table className='table'>
         <thead>
           <tr>
             <th>Key</th>
