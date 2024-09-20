@@ -8,6 +8,7 @@
   align-items: center;
   width: 80%;
   margin: 0 auto;
+  align-items: center;
 }
 
 .table-header {
@@ -53,18 +54,18 @@ table th {
   color: white;
   font-weight: 600;
   text-transform: uppercase;
-  position: relative; /* Ensure that icons are positioned relative to th */
+  position: relative;
 }
 
 .table th .sortable {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Adjust spacing between header text and icons */
+  justify-content: space-between;
 }
 
 .table th svg {
   font-size: 14px;
-  margin-left: 8px; /* Space between header text and icon */
+  margin-left: 8px;
 }
 
 .pagination {
@@ -79,4 +80,71 @@ table th {
 
 .total-items {
   margin-right: auto;
+}
+.th-clickable {
+  cursor: pointer;
+  position: relative;
+  text-align: left;
+  padding-right: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.th-wide {
+  width: 150px;
+}
+
+.table th .sort-icon {
+  position: absolute;
+  right: 9px;
+}
+.th-clickable {
+  cursor: pointer;
+  position: relative;
+  text-align: left;
+  padding-right: 30px;
+  white-space: nowra;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #d1084b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 3px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #d1084b;
+}
+
+.pagination button.active {
+  background-color: #d1084b;
+  font-weight: bold;
+}
+
+.pagination span {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 0 3px;
+  color: #6c757d;
+}
+
+.pagination button:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
 }

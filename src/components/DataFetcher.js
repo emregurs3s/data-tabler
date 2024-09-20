@@ -9,16 +9,31 @@ const DataFetcher = ({ data }) => {
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
-    const filtered = Object.keys(data)
+    const cleanedData = { ...data };
+
+  
+    
+    Object.keys(cleanedData).forEach(key => {
+      const cleanedItem = cleanedData[key];
+      Object.keys(cleanedItem).forEach(subKey => {
+        if (typeof cleanedItem[subKey] === 'object' && cleanedItem[subKey] !== null) {
+          cleanedItem[subKey] = JSON.stringify(cleanedItem[subKey]);
+        }
+      });
+    });
+
+
+    const filtered = Object.keys(cleanedData)
       .filter(key => {
-        const item = data[key];
+        const item = cleanedData[key];
         return key.toLowerCase().includes(searchTerm.toLowerCase()) ||
           Object.values(item).some(value =>
             typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase()) ||
             typeof value === 'number' && value.toString().includes(searchTerm)
           );
       })
-      .reduce((res, key) => ({ ...res, [key]: data[key] }), {});
+      .reduce((res, key) => ({ ...res, [key]: cleanedData[key] }), {});
+    
     setFilteredData(filtered);
   }, [searchTerm, data]);
 
@@ -95,8 +110,7 @@ const DataFetcher = ({ data }) => {
           <option value={Object.keys(filteredData).length}>All</option>
         </select>
       </div>
-      <span className="total-items"> Total: {Object.keys(filteredData).length} item</span>
-
+      
       <input
         type="text"
         value={searchTerm}
@@ -109,17 +123,19 @@ const DataFetcher = ({ data }) => {
       <table className='table'>
         <thead>
           <tr>
-            <th onClick={() => handleSort('key')} style={{ cursor: 'pointer' }}>
+            <th>
               Key
-              {sortConfig.key === 'key' && (
-                sortConfig.direction === 'ascending' ? <FaArrowDown /> : <FaArrowUp />
-              )}
             </th>
             {valueHeaders.map((header, index) => (
-              <th key={index} onClick={() => handleSort(header)} style={{ cursor: 'pointer' }}>
-                {header}
+              <th 
+                key={index} 
+                onClick={() => handleSort(header)} 
+                className='th-clickable'>
+                <span>{header}</span>
                 {sortConfig.key === header && (
-                  sortConfig.direction === 'ascending' ? <FaArrowDown /> : <FaArrowUp />
+                  <span className='sort-icon'> 
+                    {sortConfig.direction === 'ascending' ? <FaArrowDown /> : <FaArrowUp />}
+                  </span>
                 )}
               </th>
             ))}
@@ -138,16 +154,39 @@ const DataFetcher = ({ data }) => {
           ))}
         </tbody>
       </table>
+      <span className="total-items"> Total: {Object.keys(filteredData).length} item</span>
       <div className="pagination">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            onClick={() => handlePageChange(index + 1)}
-            className={currentPage === index + 1 ? 'active' : ''}
-          >
-            {index + 1}
-          </button>
-        ))}
+      {currentPage >1 && (
+
+<button onClick={() =>handlePageChange(currentPage -1)}>Önceki</button>
+      )}
+{totalPages>5 && currentPage>3 && (
+  <>
+  <button onClick={()=> handlePageChange(1)}>1</button>
+  {currentPage > 4 && <span>...</span>}
+  </>
+)}
+{Array.from({length:Math.min(5,totalPages)},(_,index)=>{
+  const page = Math.max(1,currentPage-2) + index;
+  return page <= totalPages ? (
+    <button
+    key={page}
+    onClick={()=>handlePageChange(page)}
+    className={currentPage===page? 'active':''}
+    >{page}</button>
+  ) : null;
+})}
+
+{totalPages > 5 && currentPage < totalPages - 2 && (
+          <>
+            {currentPage < totalPages - 3 && <span>...</span>}
+            <button onClick={() => handlePageChange(totalPages)}>{totalPages}</button>
+          </>
+        )}
+
+        {currentPage < totalPages && (
+          <button onClick={() => handlePageChange(currentPage + 1)}>Sonraki</button>
+        )}
       </div>
     </div>
   );
